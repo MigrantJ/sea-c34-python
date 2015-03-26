@@ -1,3 +1,6 @@
+from os import system
+
+
 class DonorList:
     """contains the list of donors and their donations.
     controls access to that data through methods.
@@ -74,6 +77,14 @@ def donation_validator(user_input):
 
 
 if __name__ == "__main__":
-    i = prompt_for_input("Type a donation: ", donation_validator)
-    donor_data.add_donation("Jim Grant", i)
-    print(donor_data)
+    while True:
+        system('clear')
+        main_menu_input = prompt_for_input("(t)hank you or create (r)eport")
+        if main_menu_input == "t":
+            print("Thank you menu")
+            prompt_for_input("Press Enter to Continue")
+        elif main_menu_input == "r":
+            print("Report menu")
+            prompt_for_input("Press Enter to Continue")
+        else:
+            break
