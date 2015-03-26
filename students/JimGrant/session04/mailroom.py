@@ -30,6 +30,18 @@ class DonorList:
 donor_data = DonorList()
 
 
+def safe_input(prompt):
+    """Allow canceling input without errors"""
+    try:
+        user_input = raw_input(prompt)
+    except EOFError:
+        user_input = None
+    except KeyboardInterrupt:
+        user_input = None
+
+    return user_input
+
+
 def prompt_for_input(prompt, validator=None):
     """Request input from the user and return it if valid.
     If input is not valid, prompt is repeated.
@@ -39,8 +51,8 @@ def prompt_for_input(prompt, validator=None):
         validator(function) - Checks input. Returns True or False. Optional.
     """
     print(prompt)
-    user_input = raw_input("> ")
-    if user_input == "quit":
+    user_input = safe_input("> ")
+    if user_input == "quit" or user_input is None:
         return None
 
     if (validator and validator(user_input)) or not validator:
