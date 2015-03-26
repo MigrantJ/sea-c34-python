@@ -29,8 +29,39 @@ class DonorList:
 
 donor_data = DonorList()
 
+
+def prompt_for_input(prompt, validator=None):
+    """Request input from the user and return it if valid.
+    If input is not valid, prompt is repeated.
+    User may exit to main menu at any time by entering 'quit'
+    Args:
+        prompt(string) - Prompt containing the user's choices and info
+        validator(function) - Checks input. Returns True or False. Optional.
+    """
+    print(prompt)
+    user_input = raw_input("> ")
+    if user_input == "quit":
+        return None
+
+    if (validator and validator(user_input)) or not validator:
+        return user_input
+    else:
+        prompt_for_input(prompt, validator)
+
+
+def donation_validator(user_input):
+    """Check to make sure the supplied donation amount is a positive float."""
+    try:
+        num = float(user_input)
+        if num <= 0:
+            raise ValueError
+        return True
+    except ValueError:
+        print("ERROR! Please enter a positive number!")
+        return False
+
+
 if __name__ == "__main__":
-    donor_data.add_donation("Homer Donor", 100)
-    donor_data.add_donation("Rhonda Donor", 200)
-    donor_data.add_donation("Homer Donor", 300)
+    i = prompt_for_input("Type a donation: ", donation_validator)
+    donor_data.add_donation("Jim Grant", i)
     print(donor_data)
