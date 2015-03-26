@@ -25,7 +25,7 @@ class DonorList:
         """
         if not self.donor_exists(name):
             self.add_donor(name)
-        self.donor_list[name].append(donation)
+        self.donor_list[name].append(float(donation))
 
 donor_data = DonorList()
 
