@@ -9,7 +9,7 @@ class DonorList:
 
     def __init__(self):
         # donor names as keys, list of donations as values
-        # Example: {"Joe Donorname": [100, 200], "Mary Moneybags": [100000000]}
+        # self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 500, 500, 500]}
         self.donor_list = {}
 
     def __str__(self):
@@ -34,6 +34,15 @@ class DonorList:
     def get_all_names(self):
         """Return names of all donors"""
         return self.donor_list.keys()
+
+    def get_num_donations(self, name):
+        return len(self.donor_list[name])
+
+    def get_donation_total(self, name):
+        total = 0
+        for d in self.donor_list[name]:
+            total += d
+        return total
 
 
 donor_data = DonorList()
@@ -114,6 +123,23 @@ def print_email(name, donation):
           .format(name, donation))
 
 
+def print_report():
+    """Print a tabular chart summarizing the donation data, sorted by total.
+    For each donor, the following is printed:
+    - Donor Name
+    - Total money donated
+    - Number of donations
+    - Average donation amount
+    """
+    for name in donor_data.get_all_names():
+        total = donor_data.get_donation_total(name)
+        s_total = "${}".format(total)
+        num = donor_data.get_num_donations(name)
+        average = "${}".format(total / num)
+
+        print("{:<20} | {:>9} | {:>3} | {:>9}".format(name, s_total, num, average))
+
+
 if __name__ == "__main__":
     prompts = {
         "main": ("Choose from the following:\n"
@@ -149,5 +175,6 @@ if __name__ == "__main__":
                     print_email(name, donation)
                     prompt_for_input(*prompts["continue"])
         elif main_menu_input.lower() == "r":
-            print("Report menu")
+            system('clear')
+            print_report()
             prompt_for_input("Press Enter to Continue")
