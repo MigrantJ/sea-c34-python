@@ -101,6 +101,19 @@ def donation_validator(user_input):
         return False
 
 
+def print_email(name, donation):
+    """Print an email thanking the donor by name for their donation."""
+    print("Dear {},\n\n"
+          "Thank you so much for your kind donation of ${}. We here at the "
+          "Foundation for Homeless Whales greatly appreciate it. Your "
+          "money will go towards creating new oceans on the moon for whales "
+          "to live in.\n\n"
+          "Thanks again,\n\n"
+          "Jim Grant\n"
+          "Director, F.H.W.\n"
+          .format(name, donation))
+
+
 if __name__ == "__main__":
     prompts = {
         "main": ("Choose from the following:\n"
@@ -132,6 +145,8 @@ if __name__ == "__main__":
                 donation = prompt_for_input(*prompts["donation"])
                 if donation:
                     donor_data.add_donation(name, donation)
+                    system('clear')
+                    print_email(name, donation)
                     prompt_for_input(*prompts["continue"])
         elif main_menu_input.lower() == "r":
             print("Report menu")
