@@ -9,8 +9,8 @@ class DonorList:
 
     def __init__(self):
         # donor names as keys, list of donations as values
-        # self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 500, 500, 500]}
-        self.donor_list = {}
+        self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 400, 500, 500], "Haha": [10, 20], "Mitt Romney": [1000000]}
+        # self.donor_list = {}
 
     def __str__(self):
         return str(self.donor_list)
@@ -32,8 +32,25 @@ class DonorList:
         self.donor_list[name].append(float(donation))
 
     def get_all_names(self):
-        """Return names of all donors"""
+        """Return names of all donors in no particular order"""
         return self.donor_list.keys()
+
+    def get_all_names_sorted(self):
+        """Return names of all donors sorted by their total donation"""
+        total_list, name_list = [], []
+        for name in self.donor_list.iterkeys():
+            total = self.get_donation_total(name)
+            for i, t in enumerate(total_list):
+                if total > t:
+                    continue
+                else:
+                    total_list.insert(i, total)
+                    name_list.insert(i, name)
+                    break
+            else:
+                total_list.append(total)
+                name_list.append(name)
+        return name_list
 
     def get_num_donations(self, name):
         return len(self.donor_list[name])
@@ -131,7 +148,7 @@ def print_report():
     - Number of donations
     - Average donation amount
     """
-    for name in donor_data.get_all_names():
+    for name in donor_data.get_all_names_sorted():
         total = donor_data.get_donation_total(name)
         s_total = "${}".format(total)
         num = donor_data.get_num_donations(name)
