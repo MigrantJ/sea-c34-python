@@ -9,8 +9,7 @@ class DonorList:
     """
 
     def __init__(self):
-        # donor names as keys, list of donations as values
-        # self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 400, 500, 500], "Haha": [10, 20], "Mitt Romney": [1000000]}
+        # donor names as keys, list of decimal donations as values
         self.donor_list = {}
 
     def __str__(self):
@@ -61,7 +60,7 @@ class DonorList:
         total = 0
         for d in self.donor_list[name]:
             total += d
-        return total
+        return Decimal(total).quantize(Decimal('.01'))
 
     def get_avg_donation(self, name):
         avg = self.get_donation_total(name) / self.get_num_donations(name)
@@ -155,14 +154,16 @@ def print_report():
     - Number of donations
     - Average donation amount
     """
-    print("{} | {} | {} | {}".format("Name", "Total", ))
+    print("{:^20} | {:^11} | {:^3} | {:^11}"
+          .format("Name", "Total", "#", "Average"))
+    print("{:_^54}".format(""))
     for name in donor_data.get_all_names_sorted():
         total = donor_data.get_donation_total(name)
         s_total = "${}".format(total)
         num = donor_data.get_num_donations(name)
         avg = "${}".format(donor_data.get_avg_donation(name))
 
-        print("{:<20} | {:>9} | {:>3} | {:>9}".format(name, s_total, num, avg))
+        print("{:<20} | {:>11} | {:>3} | {:>11}".format(name, s_total, num, avg))
 
 
 if __name__ == "__main__":
