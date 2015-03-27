@@ -31,8 +31,21 @@ class DonorList:
             self.add_donor(name)
         self.donor_list[name].append(float(donation))
 
+    def get_all_names(self):
+        """Return names of all donors"""
+        return self.donor_list.keys()
+
 
 donor_data = DonorList()
+
+
+def print_all_names():
+    """Print all donor names"""
+    print("List of Donors:")
+    print("---------------")
+    for n in donor_data.get_all_names():
+        print(n)
+    print("_______________")
 
 
 def safe_input(prompt):
@@ -66,6 +79,16 @@ def prompt_for_input(prompt, validator=None):
         prompt_for_input(prompt, validator)
 
 
+def name_validator(user_input):
+    """Check to make sure the entered donor name is an alphabetical string.
+    User may also type 'list' to print all current donor names.
+    """
+    if user_input == "list":
+        print_all_names()
+        return False
+    return True
+
+
 def donation_validator(user_input):
     """Check to make sure the supplied donation amount is a positive float."""
     try:
@@ -89,7 +112,7 @@ if __name__ == "__main__":
         "name": ("Please enter a name, or choose from the following:\n"
                  "list - Print a list of previous donors\n"
                  "quit - Return to main menu",
-                 None),
+                 name_validator),
 
         "donation": ("Please enter a donation amount or 'quit':",
                      donation_validator),
@@ -101,15 +124,15 @@ if __name__ == "__main__":
         system('clear')
         print("Welcome to Mailroom Madness")
         main_menu_input = prompt_for_input(*prompts["main"])
-        if main_menu_input == "t":
+        if main_menu_input is None:
+            break
+        elif main_menu_input.lower() == "t":
             name = prompt_for_input(*prompts["name"])
             if name:
                 donation = prompt_for_input(*prompts["donation"])
                 if donation:
                     donor_data.add_donation(name, donation)
                     prompt_for_input(*prompts["continue"])
-        elif main_menu_input == "r":
+        elif main_menu_input.lower() == "r":
             print("Report menu")
             prompt_for_input("Press Enter to Continue")
-        elif main_menu_input is None:
-            break
