@@ -31,6 +31,7 @@ class DonorList:
             self.add_donor(name)
         donation = Decimal(donation).quantize(Decimal('.01'))
         self.donor_list[name].append(donation)
+        return donation
 
     def get_all_names(self):
         """Return names of all donors in no particular order"""
@@ -133,17 +134,17 @@ def donation_validator(user_input):
         return False
 
 
-def print_email(name, donation):
+def print_email(donate_dict):
     """Print an email thanking the donor by name for their donation."""
-    print("Dear {},\n\n"
-          "Thank you so much for your kind donation of ${}. We here at the "
+    print("Dear {n},\n\n"
+          "Thank you so much for your kind donation of ${d}. We here at the "
           "Foundation for Homeless Whales greatly appreciate it. Your "
           "money will go towards creating new oceans on the moon for whales "
           "to live in.\n\n"
           "Thanks again,\n\n"
           "Jim Grant\n"
           "Director, F.H.W.\n"
-          .format(name, donation))
+          .format(**donate_dict))
 
 
 def print_report():
@@ -196,9 +197,10 @@ if __name__ == "__main__":
             if name:
                 donation = prompt_for_input(*prompts["donation"])
                 if donation:
-                    donor_data.add_donation(name, donation)
+                    # add and convert to decimal
+                    donation = donor_data.add_donation(name, donation)
                     system('clear')
-                    print_email(name, donation)
+                    print_email({'n': name, 'd': donation})
                     prompt_for_input(*prompts["continue"])
         elif main_menu_input.lower() == "r":
             system('clear')
