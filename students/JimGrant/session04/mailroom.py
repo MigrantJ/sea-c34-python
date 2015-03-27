@@ -1,4 +1,5 @@
 from os import system
+from decimal import *
 
 
 class DonorList:
@@ -9,8 +10,8 @@ class DonorList:
 
     def __init__(self):
         # donor names as keys, list of donations as values
-        self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 400, 500, 500], "Haha": [10, 20], "Mitt Romney": [1000000]}
-        # self.donor_list = {}
+        # self.donor_list = {"Joe Donornam": [100, 200, 300], "Mary Moneybags": [500, 400, 500, 500], "Haha": [10, 20], "Mitt Romney": [1000000]}
+        self.donor_list = {}
 
     def __str__(self):
         return str(self.donor_list)
@@ -29,7 +30,8 @@ class DonorList:
         """
         if not self.donor_exists(name):
             self.add_donor(name)
-        self.donor_list[name].append(float(donation))
+        donation = Decimal(donation).quantize(Decimal('.01'))
+        self.donor_list[name].append(donation)
 
     def get_all_names(self):
         """Return names of all donors in no particular order"""
@@ -60,6 +62,11 @@ class DonorList:
         for d in self.donor_list[name]:
             total += d
         return total
+
+    def get_avg_donation(self, name):
+        avg = self.get_donation_total(name) / self.get_num_donations(name)
+        avg = Decimal(avg).quantize(Decimal('.01'))
+        return avg
 
 
 donor_data = DonorList()
@@ -148,13 +155,14 @@ def print_report():
     - Number of donations
     - Average donation amount
     """
+    print("{} | {} | {} | {}".format("Name", "Total", ))
     for name in donor_data.get_all_names_sorted():
         total = donor_data.get_donation_total(name)
         s_total = "${}".format(total)
         num = donor_data.get_num_donations(name)
-        average = "${}".format(total / num)
+        avg = "${}".format(donor_data.get_avg_donation(name))
 
-        print("{:<20} | {:>9} | {:>3} | {:>9}".format(name, s_total, num, average))
+        print("{:<20} | {:>9} | {:>3} | {:>9}".format(name, s_total, num, avg))
 
 
 if __name__ == "__main__":
