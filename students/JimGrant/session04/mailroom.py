@@ -77,14 +77,33 @@ def donation_validator(user_input):
 
 
 if __name__ == "__main__":
+    prompts = {
+        "main": """Choose from the following:
+        T - Send a (T)hank You
+        R - Create a (R)eport
+        quit - Quit the program""",
+
+        "name": """Please enter a name, or choose from the following:
+        list - Print a list of previous donors
+        quit - Return to main menu""",
+
+        "donation": "Please enter a donation amount or 'quit':",
+
+        "continue": "Press Enter to Continue..."
+    }
     while True:
         system('clear')
-        main_menu_input = prompt_for_input("(t)hank you or create (r)eport")
+        print("Welcome to Mailroom Madness")
+        main_menu_input = prompt_for_input(prompts["main"])
         if main_menu_input == "t":
-            print("Thank you menu")
-            prompt_for_input("Press Enter to Continue")
+            name = prompt_for_input(prompts["name"])
+            if name:
+                donation = prompt_for_input(prompts["donation"])
+                if donation:
+                    donor_data.add_donation(name, donation)
+                    prompt_for_input(prompts["continue"])
         elif main_menu_input == "r":
             print("Report menu")
             prompt_for_input("Press Enter to Continue")
-        else:
+        elif main_menu_input is None:
             break
