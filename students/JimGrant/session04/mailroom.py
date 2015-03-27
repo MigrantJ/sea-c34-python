@@ -102,7 +102,7 @@ def prompt_for_input(prompt, validator=None):
     if (validator and validator(user_input)) or not validator:
         return user_input
     else:
-        prompt_for_input(prompt, validator)
+        return prompt_for_input(prompt, validator)
 
 
 def name_validator(user_input):
