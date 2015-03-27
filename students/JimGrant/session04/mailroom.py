@@ -6,6 +6,7 @@ class DonorList:
     controls access to that data through methods.
     program creates a single instance of this class on start
     """
+
     def __init__(self):
         # donor names as keys, list of donations as values
         # Example: {"Joe Donorname": [100, 200], "Mary Moneybags": [100000000]}
@@ -29,6 +30,7 @@ class DonorList:
         if not self.donor_exists(name):
             self.add_donor(name)
         self.donor_list[name].append(float(donation))
+
 
 donor_data = DonorList()
 
@@ -78,30 +80,34 @@ def donation_validator(user_input):
 
 if __name__ == "__main__":
     prompts = {
-        "main": """Choose from the following:
-        T - Send a (T)hank You
-        R - Create a (R)eport
-        quit - Quit the program""",
+        "main": ("Choose from the following:\n"
+                 "T - Send a (T)hank You\n"
+                 "R - Create a (R)eport\n"
+                 "quit - Quit the program",
+                 None),
 
-        "name": """Please enter a name, or choose from the following:
-        list - Print a list of previous donors
-        quit - Return to main menu""",
+        "name": ("Please enter a name, or choose from the following:\n"
+                 "list - Print a list of previous donors\n"
+                 "quit - Return to main menu",
+                 None),
 
-        "donation": "Please enter a donation amount or 'quit':",
+        "donation": ("Please enter a donation amount or 'quit':",
+                     donation_validator),
 
-        "continue": "Press Enter to Continue..."
+        "continue": ("Press Enter to Continue...",
+                     None)
     }
     while True:
         system('clear')
         print("Welcome to Mailroom Madness")
-        main_menu_input = prompt_for_input(prompts["main"])
+        main_menu_input = prompt_for_input(*prompts["main"])
         if main_menu_input == "t":
-            name = prompt_for_input(prompts["name"])
+            name = prompt_for_input(*prompts["name"])
             if name:
-                donation = prompt_for_input(prompts["donation"])
+                donation = prompt_for_input(*prompts["donation"])
                 if donation:
                     donor_data.add_donation(name, donation)
-                    prompt_for_input(prompts["continue"])
+                    prompt_for_input(*prompts["continue"])
         elif main_menu_input == "r":
             print("Report menu")
             prompt_for_input("Press Enter to Continue")
