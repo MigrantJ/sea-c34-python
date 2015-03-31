@@ -167,7 +167,8 @@ def print_report():
         num = donor_data.get_num_donations(name)
         avg = "${}".format(donor_data.get_avg_donation(name))
 
-        print("{:<20} | {:>11} | {:>3} | {:>11}".format(name, s_total, num, avg))
+        print("{:<20} | {:>11} | {:>3} | {:>11}"
+              .format(name, s_total, num, avg))
 
 
 if __name__ == "__main__":
