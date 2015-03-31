@@ -55,15 +55,18 @@ class DonorList:
         return name_list
 
     def get_num_donations(self, name):
+        """Return number of donations for donor"""
         return len(self.donor_list[name])
 
     def get_donation_total(self, name):
+        """Return total of all donations for donor"""
         total = 0
         for d in self.donor_list[name]:
             total += d
         return Decimal(total).quantize(Decimal('.01'))
 
     def get_avg_donation(self, name):
+        """Return the average donation for donor"""
         avg = self.get_donation_total(name) / self.get_num_donations(name)
         avg = Decimal(avg).quantize(Decimal('.01'))
         return avg
