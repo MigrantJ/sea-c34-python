@@ -1,6 +1,5 @@
 def function_builder(n):
-    return []
-
+    return [lambda x, e=i: x + e for i in range(n)]
 
 if __name__ == "__main__":
     the_list = function_builder(4)
