@@ -8,8 +8,13 @@ def step2():
     """Using a list comprehension, build a dictionary of numbers from zero to
     fifteen and the hexadecimal equivalent.
     """
-    nums = {n: hex(n) for n in range(16)}
-    print(nums)
+    r = range(0, 16)
+    print(dict(zip(r, [hex(i) for i in r])))
+
+
+def step3():
+    """Do the previous entirely with a dict comprehension."""
+    print({n: hex(n) for n in range(16)})
 
 
 if __name__ == "__main__":
@@ -21,3 +26,4 @@ if __name__ == "__main__":
                   u"pasta": u"spaghetti"}
     step1(food_prefs)
     step2()
+    step3()
