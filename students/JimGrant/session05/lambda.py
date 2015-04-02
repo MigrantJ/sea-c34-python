@@ -1,4 +1,7 @@
 def function_builder(n):
+    """Return a list of n functions, such that each one, when called, will
+    return the input value, incremented by an increasing number.
+    """
     return [lambda x, e=i: x + e for i in range(n)]
 
 if __name__ == "__main__":
