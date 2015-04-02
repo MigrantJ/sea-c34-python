@@ -24,6 +24,13 @@ def step4(the_dict):
     print({k: v.count("a") for k, v in the_dict.iteritems()})
 
 
+def step5():
+    """Create sets that contain numbers 1 through 20 that are divisible by the
+    numbers they're named after.
+    """
+    print({"s" + str(i): {n for n in range(21) if n % i == 0}
+           for i in range(2, 5)})
+
 if __name__ == "__main__":
     food_prefs = {u"name": u"Jim",
                   u"city": u"Seattle",
@@ -35,3 +42,4 @@ if __name__ == "__main__":
     step2()
     step3()
     step4(food_prefs)
+    step5()
