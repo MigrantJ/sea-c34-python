@@ -17,6 +17,13 @@ def step3():
     print({n: hex(n) for n in range(16)})
 
 
+def step4(the_dict):
+    """Make a dictionary using the same keys but with the number of 'a's in
+    each value.
+    """
+    print({k: v.count("a") for k, v in the_dict.iteritems()})
+
+
 if __name__ == "__main__":
     food_prefs = {u"name": u"Jim",
                   u"city": u"Seattle",
@@ -27,3 +34,4 @@ if __name__ == "__main__":
     step1(food_prefs)
     step2()
     step3()
+    step4(food_prefs)
