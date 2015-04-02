@@ -4,6 +4,14 @@ def step1(the_dict):
           "{salad} salad, and {pasta} pasta".format(**the_dict))
 
 
+def step2():
+    """Using a list comprehension, build a dictionary of numbers from zero to
+    fifteen and the hexadecimal equivalent.
+    """
+    nums = {n: hex(n) for n in range(16)}
+    print(nums)
+
+
 if __name__ == "__main__":
     food_prefs = {u"name": u"Jim",
                   u"city": u"Seattle",
@@ -12,3 +20,4 @@ if __name__ == "__main__":
                   u"salad": u"caesar",
                   u"pasta": u"spaghetti"}
     step1(food_prefs)
+    step2()
