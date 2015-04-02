@@ -1,6 +1,5 @@
 def count_evens(nums):
-    # one line comprehension here
-    pass
+    return len([n for n in nums if n % 2 == 0])
 
 if __name__ == "__main__":
     assert count_evens([2, 1, 2, 3, 4]) == 3
