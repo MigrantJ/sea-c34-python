@@ -28,8 +28,10 @@ def step5():
     """Create sets that contain numbers 1 through 20 that are divisible by the
     numbers they're named after.
     """
-    print({"s" + str(i): {n for n in range(21) if n % i == 0}
-           for i in range(2, 5)})
+    s2, s3, s4 = [{n for n in range(21) if n % i == 0} for i in range(2, 5)]
+    print(s2)
+    print(s3)
+    print(s4)
 
 if __name__ == "__main__":
     food_prefs = {u"name": u"Jim",
