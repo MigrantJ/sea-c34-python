@@ -6,14 +6,18 @@ class Element(object):
     indent = u"    "
     tagjoin = u"\n"
 
-    def __init__(self, content=None):
+    def __init__(self, content=None, **kwargs):
         self.content = [str(content)] if content else []
+        self.attrs = kwargs if kwargs else {}
 
     def append(self, s):
         self.content.append(s)
 
     def build_open_tag(self, ind):
-        return u"".join([ind, u"<", self.tag, u">"])
+        attr_str = ""
+        for key, val in self.attrs.iteritems():
+            attr_str = u" ".join([attr_str, "%s=\"%s\"" % (key, val)])
+        return u"".join([ind, u"<", self.tag, attr_str, u">"])
 
     def build_content(self, ind):
         c_str = None
