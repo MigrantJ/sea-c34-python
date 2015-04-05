@@ -6,30 +6,32 @@ class Element(object):
     indent = u"    "
 
     def __init__(self, content=None):
-        self.indent = ""
-        self.content = Element.indent + str(content) if content else ""
+        self.content = [str(content)] if content else []
 
     def append(self, s):
-        add = ""
-        try:
-            s.indent = Element.indent + self.indent
-            add = s.output(s.indent)
-        except AttributeError:
-            add = Element.indent + s
-        finally:
-            if self.content != "":
-                self.content = u"\n".join([self.content, add])
-            else:
-                self.content = add
+        self.content.append(s)
 
     def output(self, ind=u""):
         open_tag = u"".join([ind, u"<", self.tag, u">"])
+        c_str = None
+        for e in self.content:
+            try:
+                if c_str:
+                    print("Next element")
+                    c_str = u"\n".join([c_str, e.output(Element.indent + ind)])
+                else:
+                    print("First element")
+                    c_str = e.output(Element.indent + ind)
+            except AttributeError:
+                if c_str:
+                    c_str = u"\n".join([c_str, Element.indent + ind + e])
+                else:
+                    c_str = Element.indent + ind + e
         close_tag = u"".join([ind, u"</", self.tag, u">"])
-        output = u"\n".join([open_tag, self.content, close_tag])
-        return output
+        return u"\n".join([open_tag, c_str, close_tag])
 
     def render(self, file_out, ind=u""):
-        file_out.write(self.output(self.indent + ind))
+        file_out.write(self.output(ind))
 
 
 class Html(Element):
