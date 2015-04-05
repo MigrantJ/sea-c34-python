@@ -14,13 +14,15 @@ class Element(object):
         self.content.append(s)
 
     def build_open_tag(self, ind):
-        attr_str = ""
+        """build a string form of the element's opening tag"""
+        attr_str = u""
         for key, val in self.attrs.iteritems():
-            attr_str = u" ".join([attr_str, "%s=\"%s\"" % (key, val)])
+            attr_str = u" ".join([attr_str, u"%s=\"%s\"" % (key, val)])
         return u"".join([ind, u"<", self.tag, attr_str, u">"])
 
     def build_content(self, ind):
-        c_str = ""
+        """build strings out of the elements contained by this element"""
+        c_str = u""
         for e in self.content:
             try:
                 # e is an Element:
@@ -32,6 +34,7 @@ class Element(object):
         return c_str
 
     def build_close_tag(self, ind):
+        """build a string form of the element's closing tag"""
         return u"".join([ind, u"</", self.tag, u">"])
 
     def output(self, ind=u""):
@@ -42,6 +45,7 @@ class Element(object):
         return self.tagjoin.join([open_tag, content, close_tag])
 
     def render(self, file_out, ind=u""):
+        """saves pretty print html out to file"""
         file_out.write(self.output(ind))
 
 
@@ -49,7 +53,7 @@ class OneLineTag(Element):
     tagjoin = u""
 
     def build_content(self, ind):
-        c_str = None
+        c_str = u""
         for e in self.content:
             try:
                 # e is an Element:
@@ -57,7 +61,7 @@ class OneLineTag(Element):
             except AttributeError:
                 # e is a string:
                 add = e
-            c_str = u"\n".join([c_str, add]) if c_str else add
+            c_str = u"".join([c_str, add]) if c_str else add
         return c_str
 
     def build_close_tag(self, ind):
@@ -68,9 +72,9 @@ class SelfClosingTag(Element):
     tagjoin = u""
 
     def build_open_tag(self, ind):
-        attr_str = ""
+        attr_str = u""
         for key, val in self.attrs.iteritems():
-            attr_str = u" ".join([attr_str, "%s=\"%s\"" % (key, val)])
+            attr_str = u" ".join([attr_str, u"%s=\"%s\"" % (key, val)])
         return u"".join([ind, u"<", self.tag, attr_str])
 
     def build_close_tag(self, ind):
@@ -117,7 +121,7 @@ class A(OneLineTag):
     tag = u"a"
 
     def __init__(self, link, content=None):
-        Element.__init__(self, content, href=link)
+        OneLineTag.__init__(self, content, href=link)
 
 
 class Ul(Element):
@@ -129,8 +133,6 @@ class Li(Element):
 
 
 class H(OneLineTag):
-    tag = u"h"
-
     def __init__(self, level, content=None):
-        self.tag = "%s%i" % (H.tag, level)
-        Element.__init__(self, content)
+        self.tag = u"h%i" % level
+        OneLineTag.__init__(self, content)
