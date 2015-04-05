@@ -12,21 +12,17 @@ class Element(object):
         self.content.append(s)
 
     def output(self, ind=u""):
+        """build a string form of the Element for printing."""
         open_tag = u"".join([ind, u"<", self.tag, u">"])
         c_str = None
         for e in self.content:
             try:
-                if c_str:
-                    print("Next element")
-                    c_str = u"\n".join([c_str, e.output(Element.indent + ind)])
-                else:
-                    print("First element")
-                    c_str = e.output(Element.indent + ind)
+                # e is an Element:
+                add = e.output(Element.indent + ind)
             except AttributeError:
-                if c_str:
-                    c_str = u"\n".join([c_str, Element.indent + ind + e])
-                else:
-                    c_str = Element.indent + ind + e
+                # e is a string:
+                add = Element.indent + ind + e
+            c_str = u"\n".join([c_str, add]) if c_str else add
         close_tag = u"".join([ind, u"</", self.tag, u">"])
         return u"\n".join([open_tag, c_str, close_tag])
 
