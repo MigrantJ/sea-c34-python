@@ -89,6 +89,10 @@ class Head(Element):
     tag = u"head"
 
 
+class Meta(SelfClosingTag):
+    tag = u"meta"
+
+
 class Title(OneLineTag):
     tag = u"title"
 
