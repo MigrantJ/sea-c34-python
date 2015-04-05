@@ -20,7 +20,7 @@ class Element(object):
         return u"".join([ind, u"<", self.tag, attr_str, u">"])
 
     def build_content(self, ind):
-        c_str = None
+        c_str = ""
         for e in self.content:
             try:
                 # e is an Element:
@@ -64,6 +64,19 @@ class OneLineTag(Element):
         return u"".join([u"</", self.tag, u">"])
 
 
+class SelfClosingTag(Element):
+    tagjoin = u""
+
+    def build_open_tag(self, ind):
+        attr_str = ""
+        for key, val in self.attrs.iteritems():
+            attr_str = u" ".join([attr_str, "%s=\"%s\"" % (key, val)])
+        return u"".join([ind, u"<", self.tag, attr_str])
+
+    def build_close_tag(self, ind):
+        return u" />"
+
+
 class Html(Element):
     header = u"<!DOCTYPE html>"
     tag = u"html"
@@ -86,3 +99,11 @@ class Body(Element):
 
 class P(Element):
     tag = u"p"
+
+
+class Hr(SelfClosingTag):
+    tag = u"hr"
+
+
+class Br(SelfClosingTag):
+    tag = u"br"
