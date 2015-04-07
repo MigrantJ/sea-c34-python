@@ -8,7 +8,7 @@ import math
 
 class Circle(object):
     def __init__(self, radius):
-        self.radius = float(radius)
+        self.radius = radius
 
     def __str__(self):
         return u"Circle with radius: %.6f" % self.radius
@@ -23,7 +23,7 @@ class Circle(object):
         return Circle(self.radius * other)
 
     def __cmp__(self, other):
-        return int(self.radius - other.radius)
+        return self.radius - other.radius
 
     def __ne__(self, other):
         return self.radius != other.radius
