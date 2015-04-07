@@ -10,8 +10,10 @@ l_alpha_offset += l_alpha_offset.upper()
 
 
 def rot13(input_string):
-    # todo: input validation
-    table = string.maketrans(l_alpha, l_alpha_offset)
-    translated_string = input_string.translate(table)
+    try:
+        table = string.maketrans(l_alpha, l_alpha_offset)
+        translated_string = input_string.translate(table)
+    except AttributeError:
+        translated_string = None
 
     return translated_string
