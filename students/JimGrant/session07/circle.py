@@ -14,7 +14,7 @@ class Circle(object):
         return u"Circle with radius: %.6f" % self.radius
 
     def __repr__(self):
-        return u"Circle(%i)" % self.radius
+        return u"Circle(%s)" % self.radius
 
     def __add__(self, other):
         return Circle(self.radius + other.radius)
