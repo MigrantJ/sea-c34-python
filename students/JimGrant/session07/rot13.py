@@ -15,7 +15,3 @@ def rot13(input_string):
     translated_string = input_string.translate(table)
 
     return translated_string
-
-
-if __name__ == "__main__":
-    print(rot13("Uryc, V'z n sernx."))
