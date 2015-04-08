@@ -55,3 +55,50 @@ class Test_Element:
     def test_build_close_tag(self):
         self.e.tag = "p"
         assert(self.e.build_close_tag("") == "</p>")
+
+
+class Test_OneLineTag:
+    e = None
+
+    def setup_method(self, method):
+        self.e = hr.OneLineTag()
+
+    def teardown_method(self, method):
+        self.e = None
+
+    def test_output(self):
+        assert(self.e.output() == "<></>")
+        self.e.append("Test")
+        assert(self.e.output() == "<>Test</>")
+
+
+class Test_SelfClosingTag:
+    e = None
+
+    def setup_method(self, method):
+        self.e = hr.SelfClosingTag()
+
+    def teardown_method(self, method):
+        self.e = None
+
+    def test_output(self):
+        self.e.tag = "br"
+        assert(self.e.output() == "<br />")
+
+
+class Test_A:
+    def test_output(self):
+        link = "http://www.google.com"
+        content = "Google"
+        a = hr.A(link, content)
+        assert(a.output() == "<a href=\"{link}\">{content}</a>"
+               .format(link=link, content=content))
+
+
+class Test_H:
+    def test_output(self):
+        level = 2
+        content = "This Is A Header"
+        h = hr.H(level, content)
+        assert(h.output() == "<h{level}>{content}</h{level}>"
+               .format(level=level, content=content))
