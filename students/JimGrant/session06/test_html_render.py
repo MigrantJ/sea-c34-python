@@ -11,12 +11,10 @@ class Test_Element:
         self.e = None
 
     def add_content(self):
-        content1 = "content1"
-        content2 = "content2"
-        content2e = hr.Element(content2)
-        self.e.append(content1)
-        self.e.append(content2e)
-        return content1, content2, content2e
+        vals = c1, c2, c2e = "content1", "content2", hr.Element("content2")
+        self.e.append(c1)
+        self.e.append(c2e)
+        return vals
 
     def test_init_empty(self):
         assert(self.e.content == [])
@@ -32,14 +30,28 @@ class Test_Element:
     def test_append(self):
         c1, c2, c2e = self.add_content()
         assert(self.e.content == [c1, c2e])
-        assert(self.e.build_content("") ==
-               "    {}\n"
-               "    <>\n"
-               "        {}\n"
-               "    </>".format(c1, c2))
 
     def test_build_open_tag(self):
         attrs = {"style": u"text-align:center"}
         self.e = hr.Element(None, **attrs)
         self.e.tag = "p"
         assert(self.e.build_open_tag("") == "<p style=\"text-align:center\">")
+
+    def test_build_content(self):
+        c1, c2, c2e = self.add_content()
+        i = hr.Element.indent
+        assert(self.e.build_content("") ==
+               "{i}{c1}\n"
+               "{i}<>\n"
+               "{i}{i}{c2}\n"
+               "{i}</>".format(i=i, c1=c1, c2=c2))
+        i2 = i + "  "
+        assert(self.e.build_content("  ") ==
+               "{i2}{c1}\n"
+               "{i2}<>\n"
+               "{i2}{i}{c2}\n"
+               "{i2}</>".format(i=i, i2=i2, c1=c1, c2=c2))
+
+    def test_build_close_tag(self):
+        self.e.tag = "p"
+        assert(self.e.build_close_tag("") == "</p>")
