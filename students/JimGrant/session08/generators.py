@@ -8,7 +8,10 @@ def intsum():
 
 
 def doubler():
-    pass
+    i = 1
+    while True:
+        yield i
+        i *= 2
 
 
 def fib():
