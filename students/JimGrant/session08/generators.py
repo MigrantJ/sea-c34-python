@@ -1,6 +1,5 @@
 def intsum():
-    i = 0
-    j = 1
+    i, j = 0, 1
     while True:
         yield i
         i += j
@@ -15,7 +14,10 @@ def doubler():
 
 
 def fib():
-    pass
+    i, j = 0, 1
+    while True:
+        yield j
+        i, j = j, i + j
 
 
 def prime():
