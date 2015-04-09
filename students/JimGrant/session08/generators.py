@@ -21,4 +21,8 @@ def fib():
 
 
 def prime():
-    pass
+    i = 2
+    while True:
+        if i < 4 or i % 2 != 0 and i % 3 != 0:
+            yield i
+        i += 1
