@@ -1,9 +1,7 @@
 def safe_input(prompt):
     try:
         user_input = raw_input(prompt)
-    except EOFError:
-        user_input = None
-    except KeyboardInterrupt:
+    except (EOFError, KeyboardInterrupt):
         user_input = None
 
     return user_input
