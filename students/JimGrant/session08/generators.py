@@ -1,5 +1,10 @@
 def intsum():
-    pass
+    i = 0
+    j = 1
+    while True:
+        yield i
+        i += j
+        j += 1
 
 
 def doubler():
